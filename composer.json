@@ -1,0 +1,12 @@
+{
+    "name": "puzanov/email2name",
+    "authors": [
+        {
+            "name": "puzanov",
+            "email": "puzanov@gmail.com"
+        }
+    ],
+    "require": {
+        "phpunit/phpunit": "5.5.*"
+    }
+}
