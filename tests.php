@@ -17,13 +17,13 @@ class StackTest extends TestCase {
     }
     public function testResolveDiscoverName() {
         $email2name = new Email2name();
-        $name = $email2name->resolve("marinochka_artemonova@gmail.com", false);
+        $name = $email2name->resolve("marinochka_artemonova@gmail.com");
         $this->assertEquals("Marinochka", $name);
 
-        $name = $email2name->resolve("ANECHKA.artemonova@gmail.com", false);
+        $name = $email2name->resolve("ANECHKA.artemonova@gmail.com");
         $this->assertEquals("Anechka", $name);
 
-        $name = $email2name->resolve("Lenochka-artemonova@gmail.com", false);
+        $name = $email2name->resolve("Lenochka-artemonova@gmail.com");
         $this->assertEquals("Lenochka", $name);
     }
 }

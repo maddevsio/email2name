@@ -4,12 +4,12 @@ class Email2name {
     public function resolve($email, $nameOnly = true) {
         $data = file_get_contents("http://www.spokeo.com/social/profile?q={$email}&loaded=1");
         if (preg_match("/profile_summary_title\'\>(.+)\<\/div\>/", $data, $matches)) {
+            if ($this->isEmail($matches[1])) {
+                return $this->discover($matches[1]);
+            }
             if ($nameOnly) {
                 return explode(" ", $matches[1])[0];
             } else {
-                if ($this->isEmail($matches[1])) {
-                    return $this->discover($matches[1]);
-                }
                 return $matches[1];
             }
         } else {
