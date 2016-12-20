@@ -1,6 +1,7 @@
 <?php
 
 class Email2name {
+    public $verbose = false;
     public function resolve($email, $nameOnly = true) {
         $data = file_get_contents("http://www.spokeo.com/social/profile?q={$email}&loaded=1");
         if (preg_match("/profile_summary_title\'\>(.+)\<\/div\>/", $data, $matches)) {
@@ -31,7 +32,9 @@ class Email2name {
         $resolvedEmails = array();
         $emails = explode("\n", trim(file_get_contents($path)));
         foreach($emails as $email) {
+            if ($this->verbose) echo "Working with $email... ";
             $name = $this->resolve($email, true);
+            if ($this->verbose) echo "$name\n";
             $resolvedEmails[] = array("name" => $name, "email" => $email);
         }
         return $resolvedEmails;
