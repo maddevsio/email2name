@@ -13,7 +13,7 @@ class Email2name {
                 return $matches[1];
             }
         } else {
-            return false;
+            return $this->discover($email);
         }
     }
 
