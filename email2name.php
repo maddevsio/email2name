@@ -29,12 +29,20 @@ class Email2name {
 
     public function resolveFromFile($path) {
         $resolvedEmails = array();
-        $emails = explode("\n", file_get_contents($path));
+        $emails = explode("\n", trim(file_get_contents($path)));
         foreach($emails as $email) {
             $name = $this->resolve($email, true);
             $resolvedEmails[] = array("name" => $name, "email" => $email);
         }
         return $resolvedEmails;
+    }
+
+    public function formatToCSV($resolvedEmails) {
+        $csv = '';
+        foreach ($resolvedEmails as $resolvedEmail) {
+            $csv .= "{$resolvedEmail['name']},{$resolvedEmail['email']}\n";
+        }
+        return trim($csv);
     }
 
     private function isEmail($email) {

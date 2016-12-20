@@ -34,4 +34,11 @@ class StackTest extends TestCase {
         $this->assertEquals("Minkin", $resolvedEmails[1]["name"]);
         $this->assertEquals("Marinochka", $resolvedEmails[2]["name"]);
     }
+    public function testFormatResultsToCSV() {
+        $path = "./emails.txt";
+        $email2name = new Email2name();
+        $resolvedEmails = $email2name->resolveFromFile($path);
+        $resolvedEmailsCSV = $email2name->formatToCSV($resolvedEmails);
+        $this->assertEquals("Oleg,puzanov@gmail.com\nMinkin,minkin.andrew@gmail.com\nMarinochka,marinochka_artemonova@gmail.com", $resolvedEmailsCSV);
+    }
 }
