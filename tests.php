@@ -20,6 +20,11 @@ class StackTest extends TestCase {
         $name = $email2name->resolve("     puzanov@gmail.com");
         $this->assertEquals("Oleg", $name);
     }
+    public function testResolveName4() {
+        $email2name = new Email2name();
+        $name = $email2name->resolve("321123@yahoo.com");
+        $this->assertEquals("321123", $name);
+    }
     public function testResolveFullName() {
         $email2name = new Email2name();
         $name = $email2name->resolve("puzanov@gmail.com", false);

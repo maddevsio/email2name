@@ -27,6 +27,9 @@ class Email2name {
         $name = explode("_", $name)[0];
         $name = explode("-", $name)[0];
         $name = ucfirst($name);
+        if (empty($name)) {
+            return explode("@", $email)[0];
+        }
         return $name;
     }
 
