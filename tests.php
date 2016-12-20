@@ -26,4 +26,12 @@ class StackTest extends TestCase {
         $name = $email2name->resolve("Lenochka-artemonova@gmail.com");
         $this->assertEquals("Lenochka", $name);
     }
+    public function testResolveFromFile() {
+        $path = "./emails.txt";
+        $email2name = new Email2name();
+        $resolvedEmails = $email2name->resolveFromFile($path);
+        $this->assertEquals("Oleg", $resolvedEmails[0]["name"]);
+        $this->assertEquals("Minkin", $resolvedEmails[1]["name"]);
+        $this->assertEquals("Marinochka", $resolvedEmails[2]["name"]);
+    }
 }

@@ -27,6 +27,16 @@ class Email2name {
         return $name;
     }
 
+    public function resolveFromFile($path) {
+        $resolvedEmails = array();
+        $emails = explode("\n", file_get_contents($path));
+        foreach($emails as $email) {
+            $name = $this->resolve($email, true);
+            $resolvedEmails[] = array("name" => $name, "email" => $email);
+        }
+        return $resolvedEmails;
+    }
+
     private function isEmail($email) {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return true;
