@@ -34,6 +34,7 @@ class Email2name {
         $resolvedEmails = array();
         $emails = explode("\n", trim(file_get_contents($path)));
         foreach($emails as $email) {
+            $email = trim($email);
             if ($this->verbose) echo "Working with $email... ";
             $name = $this->resolve($email, true);
             if ($this->verbose) echo "$name\n";
