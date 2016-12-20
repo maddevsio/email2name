@@ -3,6 +3,7 @@
 class Email2name {
     public $verbose = false;
     public function resolve($email, $nameOnly = true) {
+        $email = trim($email);
         $data = file_get_contents("http://www.spokeo.com/social/profile?q={$email}&loaded=1");
         if (preg_match("/profile_summary_title\'\>(.+)\<\/div\>/", $data, $matches)) {
             if ($this->isEmail($matches[1])) {
@@ -19,6 +20,7 @@ class Email2name {
     }
 
     public function discover($email) {
+        $email = trim($email);
         $name = explode("@", $email)[0];
         $name = preg_replace('/\d+/', '', $name);
         $name = explode(".", $name)[0];
