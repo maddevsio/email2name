@@ -55,6 +55,23 @@ class Email2name {
         return $resolvedEmails;
     }
 
+    public function resolveFromFile($path) {
+        $resolvedEmails = array();
+        $emails = explode("\n", trim(file_get_contents($path)));
+        foreach($emails as $email) {
+            $email = trim($email);
+            if ($this->verbose) echo "Working with $email... ";
+            $name = $this->resolve($email, true);
+            if ($name) {
+                if ($this->verbose) echo "$name\n";
+                $resolvedEmails[] = array("name" => $name, "email" => $email);
+            } else {
+                if ($this->verbose) echo "not found, skipping\n";
+            }
+        }
+        return $resolvedEmails;
+    }
+
     public function formatToCSV($resolvedEmails) {
         $csv = '';
         foreach ($resolvedEmails as $resolvedEmail) {
