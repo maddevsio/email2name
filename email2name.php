@@ -2,7 +2,7 @@
 
 class Email2name {
     public $verbose = false;
-    public function resolve($email, $nameOnly = true) {
+    public function resolveAndDiscover($email, $nameOnly = true) {
         $email = trim($email);
         $data = file_get_contents("http://www.spokeo.com/social/profile?q={$email}&loaded=1");
         if (preg_match("/profile_summary_title\'\>(.+)\<\/div\>/", $data, $matches)) {
@@ -33,13 +33,13 @@ class Email2name {
         return $name;
     }
 
-    public function resolveFromFile($path) {
+    public function resolveAndDiscoverFromFile($path) {
         $resolvedEmails = array();
         $emails = explode("\n", trim(file_get_contents($path)));
         foreach($emails as $email) {
             $email = trim($email);
             if ($this->verbose) echo "Working with $email... ";
-            $name = $this->resolve($email, true);
+            $name = $this->resolveAndDiscover($email, true);
             if ($this->verbose) echo "$name\n";
             $resolvedEmails[] = array("name" => $name, "email" => $email);
         }
