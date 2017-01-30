@@ -4,10 +4,19 @@ class Email2name {
     public $verbose = false;
     public function resolveAndDiscover($email, $nameOnly = true) {
         $email = trim($email);
+        $name = $this->resolve($email, $nameOnly);
+        if ($name === false) {
+            return $this->discover($email);
+        }
+        return $name;
+    }
+
+    public function resolve($email, $nameOnly = true) {
+        $email = trim($email);
         $data = file_get_contents("http://www.spokeo.com/social/profile?q={$email}&loaded=1");
         if (preg_match("/profile_summary_title\'\>(.+)\<\/div\>/", $data, $matches)) {
             if ($this->isEmail($matches[1])) {
-                return $this->discover($matches[1]);
+                return false;
             }
             if ($nameOnly) {
                 return explode(" ", $matches[1])[0];
@@ -15,7 +24,7 @@ class Email2name {
                 return $matches[1];
             }
         } else {
-            return $this->discover($email);
+            return false;
         }
     }
 
@@ -26,7 +35,7 @@ class Email2name {
         $name = explode(".", $name)[0];
         $name = explode("_", $name)[0];
         $name = explode("-", $name)[0];
-        $name = ucfirst($name);
+        $name = ucfirst(strtolower($name));
         if (empty($name)) {
             return explode("@", $email)[0];
         }
