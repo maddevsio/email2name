@@ -58,9 +58,11 @@ class Email2name {
     public function resolveFromFile($path) {
         $resolvedEmails = array();
         $emails = explode("\n", trim(file_get_contents($path)));
+        $k = 0;
         foreach($emails as $email) {
+            $k++;
             $email = trim($email);
-            if ($this->verbose) echo "Working with $email... ";
+            if ($this->verbose) echo "$k Working with $email... ";
             $name = $this->resolve($email, true);
             if ($name) {
                 if ($this->verbose) echo "$name\n";
