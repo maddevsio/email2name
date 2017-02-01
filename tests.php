@@ -87,4 +87,19 @@ class StackTest extends TestCase {
         $resolvedEmailsCSV = $email2name->formatToCSV($resolvedEmails);
         $this->assertEquals("Oleg,puzanov@gmail.com", $resolvedEmailsCSV);
     }
+    public function testResolveAndSaveToCSV() {
+        $emailsFilePath = "./test-emails.txt";
+        $csvFilePath = "./test-resolved.csv";
+
+        @unlink($csvFilePath);
+
+        $email2name = new Email2name();
+        $email2name->resolveFromFile($emailsFilePath, $csvFilePath);
+        $csvData = file_get_contents($csvFilePath);
+        $this->assertEquals("Oleg,puzanov@gmail.com\n", $csvData);
+
+        $email2name->resolveFromFile($emailsFilePath, $csvFilePath);
+        $csvData = file_get_contents($csvFilePath);
+        $this->assertEquals("Oleg,puzanov@gmail.com\nOleg,puzanov@gmail.com\n", $csvData);
+    }
 }

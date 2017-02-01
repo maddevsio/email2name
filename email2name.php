@@ -55,9 +55,9 @@ class Email2name {
         return $resolvedEmails;
     }
 
-    public function resolveFromFile($path) {
+    public function resolveFromFile($emailsFilePath, $csvFilePath = false) {
         $resolvedEmails = array();
-        $emails = explode("\n", trim(file_get_contents($path)));
+        $emails = explode("\n", trim(file_get_contents($emailsFilePath)));
         $k = 0;
         foreach($emails as $email) {
             $k++;
@@ -67,6 +67,9 @@ class Email2name {
             if ($name) {
                 if ($this->verbose) echo "$name\n";
                 $resolvedEmails[] = array("name" => $name, "email" => $email);
+                if ($csvFilePath) {
+                    file_put_contents($csvFilePath, "$name,$email\n", FILE_APPEND | LOCK_EX);
+                }
             } else {
                 if ($this->verbose) echo "not found, skipping\n";
             }
